@@ -718,9 +718,9 @@ class CPU:
                 op = self.read_pc_byte()
                 func = self.ops[op]
                 if func is None:
-                    print "UNKNOWN OP"
-                    print hex(self.program_counter - 1)
-                    print hex(op)
+                    print("UNKNOWN OP")
+                    print(hex(self.program_counter - 1))
+                    print(hex(op))
                     break
                 else:
                     self.ops[op]()
@@ -735,9 +735,9 @@ class CPU:
             op = self.read_pc_byte()
             func = self.ops[op]
             if func is None:
-                print "UNKNOWN OP"
-                print hex(self.program_counter - 1)
-                print hex(op)
+                print("UNKNOWN OP")
+                print(hex(self.program_counter - 1))
+                print(hex(op))
                 break
             else:
                 self.ops[op]()
@@ -1171,15 +1171,18 @@ class CPU:
 
 
 def usage():
-    print >>sys.stderr, "ApplePy - an Apple ][ emulator in Python"
-    print >>sys.stderr, "James Tauber / http://jtauber.com/"
-    print >>sys.stderr
-    print >>sys.stderr, "Usage: cpu6502.py [options]"
-    print >>sys.stderr
-    print >>sys.stderr, "    -b, --bus      Bus port number"
-    print >>sys.stderr, "    -p, --pc       Initial PC value"
-    print >>sys.stderr, "    -R, --rom      ROM file to use (default A2ROM.BIN)"
-    print >>sys.stderr, "    -r, --ram      RAM file to load (default none)"
+    msg = [
+        "ApplePy - an Apple ][ emulator in Python",
+        "James Tauber / http://jtauber.com/",
+        "",
+        "Usage: cpu6502.py [options]",
+        "",
+        "    -b, --bus      Bus port number",
+        "    -p, --pc       Initial PC value",
+        "    -R, --rom      ROM file to use (default A2ROM.BIN)",
+        "    -r, --ram      RAM file to load (default none)",
+    ]
+    print("\n".join(msg), file=sys.stderr)
     sys.exit(1)
 
 
@@ -1219,8 +1222,8 @@ def get_options():
 if __name__ == "__main__":
     options = get_options()
     if options.bus is None:
-        print "ApplePy cpu core"
-        print "Run applepy.py instead"
+        print("ApplePy cpu core")
+        print("Run applepy.py instead")
         sys.exit(0)
 
     mem = Memory(options)

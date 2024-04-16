@@ -391,7 +391,7 @@ class Apple2:
 
         rs, _, _ = select.select([listener], [], [], 2)
         if not rs:
-            print >>sys.stderr, "CPU module did not start"
+            print("CPU module did not start", file=sys.stderr)
             sys.exit(1)
         self.cpu, _ = listener.accept()
 
@@ -435,16 +435,19 @@ class Apple2:
 
 
 def usage():
-    print >>sys.stderr, "ApplePy - an Apple ][ emulator in Python"
-    print >>sys.stderr, "James Tauber / http://jtauber.com/"
-    print >>sys.stderr
-    print >>sys.stderr, "Usage: applepy.py [options]"
-    print >>sys.stderr
-    print >>sys.stderr, "    -c, --cassette Cassette wav file to load"
-    print >>sys.stderr, "    -R, --rom      ROM file to use (default A2ROM.BIN)"
-    print >>sys.stderr, "    -r, --ram      RAM file to load (default none)"
-    print >>sys.stderr, "    -p, --pc       Initial PC value"
-    print >>sys.stderr, "    -q, --quiet    Quiet mode, no sounds (default sounds)"
+    msg = [
+        "ApplePy - an Apple ][ emulator in Python",
+        "James Tauber / http://jtauber.com/",
+        "",
+        "Usage: applepy.py [options]",
+        "",
+        "    -c, --cassette Cassette wav file to load",
+        "    -R, --rom      ROM file to use (default A2ROM.BIN)",
+        "    -r, --ram      RAM file to load (default none)",
+        "    -p, --pc       Initial PC value",
+        "    -q, --quiet    Quiet mode, no sounds (default sounds)",
+    ]
+    print("\n".join(msg), file=sys.stderr)
     sys.exit(1)
 
 
