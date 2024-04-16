@@ -505,10 +505,11 @@ class CPU:
     STACK_PAGE = 0x100
     RESET_VECTOR = 0xFFFC
 
-    def __init__(self, options, memory):
+    def __init__(self, memory, options=None):
         self.memory = memory
 
-        self.control_server = HTTPServer(("127.0.0.1", 6502), ControlHandlerFactory(self))
+        if options is not None:
+            self.control_server = HTTPServer(("127.0.0.1", 6502), ControlHandlerFactory(self))
 
         self.accumulator = 0x00
         self.x_index = 0x00
@@ -1228,5 +1229,5 @@ if __name__ == "__main__":
 
     mem = Memory(options)
 
-    cpu = CPU(options, mem)
+    cpu = CPU(mem, options=options)
     cpu.run(options.bus)
