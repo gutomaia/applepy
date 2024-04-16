@@ -3,7 +3,7 @@
 # originally written 2001, updated 2011
 
 
-import BaseHTTPServer
+from http.server import BaseHTTPRequestHandler,HTTPServer
 import json
 import re
 import select
@@ -365,7 +365,7 @@ class Disassemble:
         return r, info[0]
 
 
-class ControlHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+class ControlHandler(BaseHTTPRequestHandler):
 
     def __init__(self, request, client_address, server, cpu):
         self.cpu = cpu
@@ -385,7 +385,7 @@ class ControlHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             r"/reset$": self.post_reset,
         }
 
-        BaseHTTPServer.BaseHTTPRequestHandler.__init__(self, request, client_address, server)
+        BaseHTTPRequestHandler.__init__(self, request, client_address, server)
 
     def log_request(self, code, size=0):
         pass
@@ -508,7 +508,7 @@ class CPU:
     def __init__(self, options, memory):
         self.memory = memory
 
-        self.control_server = BaseHTTPServer.HTTPServer(("127.0.0.1", 6502), ControlHandlerFactory(self))
+        self.control_server = HTTPServer(("127.0.0.1", 6502), ControlHandlerFactory(self))
 
         self.accumulator = 0x00
         self.x_index = 0x00
@@ -528,7 +528,7 @@ class CPU:
 
         self.setup_ops()
         self.reset()
-        if options.pc is not None:
+        if options is not None and options.pc is not None:
             self.program_counter = options.pc
         self.running = True
         self.quit = False
